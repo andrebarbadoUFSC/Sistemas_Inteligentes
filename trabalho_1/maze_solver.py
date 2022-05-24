@@ -2,6 +2,8 @@ from ipaddress import collapse_addresses
 from matplotlib.pyplot import grid
 
 
+##-------------------------- MAZE MAP
+
 row1 = [2,0,0,0,0,0,0,0,0,0]
 row2 = [1,0,0,0,0,0,0,0,0,0]
 row3 = [1,0,0,0,0,0,0,0,0,0]
@@ -12,6 +14,9 @@ row7 = [0,0,1,1,1,1,0,1,0,0]
 row8 = [0,0,1,0,0,0,0,1,0,0]
 row9 = [0,0,1,0,0,0,0,1,0,0]
 row10= [0,0,1,3,1,1,1,1,0,0]
+
+
+##-------------------------- Insert into Matrix
 
 matrix = []
 matrix.append(row1)
@@ -25,9 +30,10 @@ matrix.append(row8)
 matrix.append(row9)
 matrix.append(row10)
 
-# print(matrix)
+#--------------------------- print(matrix)
 nrows = len(matrix)
 ncolumns = len(matrix[0])
+
 
 print("numero de linhas =",nrows)
 print("numero de colunas =",ncolumns)
@@ -35,7 +41,7 @@ print("numero de colunas =",ncolumns)
 
 TILE = 50
 
-# procurando o "quadrado incial"
+##-------------------------- procurando o "quadrado incial"
 for row in range(0,nrows):
     for col in range(0,ncolumns):
         if(matrix[row][col]==2):
@@ -43,6 +49,7 @@ for row in range(0,nrows):
             inicial_col = col
 
 # print(inicial_row,inicial_col)
+
 
 class Cell:
     def __init__(self,row,col,id):
