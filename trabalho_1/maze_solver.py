@@ -148,7 +148,13 @@ class AgenteDFS:
     def move(self):
         print("DFS se movimentando")
 
-agente = AgenteBFS(inicial_row,inicial_col)
+
+modo = input("Selecione BFS[1] ou DFS[2]")        
+
+if modo == "1":
+    agente = AgenteBFS(inicial_row,inicial_col)
+if modo == "2":
+    agente = AgenteDFS(inicial_row,inicial_col)
 
 import pygame  
   
