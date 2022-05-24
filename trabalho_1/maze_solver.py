@@ -62,21 +62,22 @@ class Cell:
     
     def check_walls(self):
         row, col = self.row, self.col
-        # checando laterais
+        ##------------------ checando laterais
         if(row>0):
             if(matrix[row-1][col]==1):
                 self.walls['left'] = False
         if(row<(nrows-1)):
             if(matrix[row+1][col]==1):
                 self.walls['right'] = False
-        # checando em cima e em baixo
+        ##------------------ checando em cima e em baixo
         if(col>0):
             if(matrix[row][col-1]==1):
                 self.walls['bottom'] = False
         if(col<(nrows-1)):
             if(matrix[row][col+1]==1):
                 self.walls['top'] = False   
-    
+
+    ## --------------------- ??????????????
     def get_id(self):
         print(self.id)
     
@@ -90,7 +91,7 @@ class Cell:
         if(matrix[row][col]==3):
                 pygame.draw.rect(screen, pygame.Color('darkred'), pygame.Rect((TILE*row),(TILE*col),TILE,TILE))
 
-# criando as células dos labirintos
+##-------------------------- criando as células dos labirintos
 grid_cells = []
 for x in range(0,nrows):
     grid_cells.append([])
@@ -139,7 +140,7 @@ class AgenteBFS:
     def draw(self):
         pygame.draw.rect(screen, pygame.Color('yellow'), pygame.Rect((TILE*self.row),(TILE*self.col),TILE,TILE))
 
-
+##-------------------------- Busca em profundidade
 class AgenteDFS:
     def __init__(self,x,y):
         self.x, self.y = x, y
