@@ -1,6 +1,9 @@
 from ipaddress import collapse_addresses
+from pickle import TRUE
 from matplotlib.pyplot import grid
 from numpy import angle
+import time
+
 
 
 ##-------------------------- MAZE MAP
@@ -100,47 +103,80 @@ for x in range(0,nrows):
 
 print(grid_cells[0][0].id)
 
+last_grid_cells = grid_cells ## ultima celula visitada para impedir de voltar para esta celula 
+
         
 class AgenteBFS:
     def __init__(self,row,col):
         self.row, self.col = row, col
+        self.last_row, self.last_col = row, col
         self.lista = []
         self.lista_checkpoint = []
         self.sucess = False
 
     def expandir_no(self):
+        
         row = self.row
         col = self.col
-        self.teste_de_objetivo(row,col)
+        ##self.teste_de_objetivo(row,col)
         print("BFS se movimentando")
-        if(row > 0 and not self.sucess):
-            if(grid_cells[row-1][col].id ==1):
-                self.teste_de_objetivo(row-1,col)
-                # self.expandir_no()
-        if(row<(nrows-1) and not self.sucess):
-            if(grid_cells[row+1][col].id ==1):
-                self.teste_de_objetivo(row+1,col)
-                # self.expandir_no()
-        if(col>0 and not self.sucess):
-            if(grid_cells[row][col-1].id ==1):
-                self.teste_de_objetivo(row,col-1)
-                # self.expandir_no()
-        if(col<(nrows-1) and not self.sucess):
-            if(grid_cells[row][col+1].id ==1):
+
+        ##------------------ Teste Baixo ???
+        if(col<(nrows-1) and not self.sucess): ## coluna menor que o num maximo menos 1 numero de rows eh igual ao numero de cols
+            if(grid_cells[row][col+1].id ==1 and col+1 != self.last_col ):
+                print("BAIXO")
+                print("linha", row, "colula :", col ,"col + 1:", col+1 , "self last col ", self.last_col)
                 self.teste_de_objetivo(row,col+1)
-                # self.expandir_no()
+                #self.expandir_no()
+                return
+
+        ##------------------ Teste Esquerda ???
+        if(row > 0 and not self.sucess): ## se a linha nao for menor que zero ou seja se nao tenar acessar algo que nao existe
+            if(grid_cells[row-1][col].id ==1 and row-1 != self.last_row ):
+                print("ESQUERDA")
+                print("linha", row, "colula :", col ,"row - 1:", row-1 , "self last row ", self.last_row)
+                self.teste_de_objetivo(row-1,col)
+                #self.expandir_no()
+                return
+
+        ##------------------ Teste Direita ???
+        if(row<(nrows-1) and not self.sucess): ## se a linha nao for maior que o o numero maximo menos 1 pra nao acessar area inexistente da matriz 
+                if(grid_cells[row+1][col].id ==1 and row+1 != self.last_row  ):
+                    print("DIREITA")
+                    print("linha", row, "colula :", col , "row + 1:", row+1 ,  "self last row ", self.last_row)
+                    self.teste_de_objetivo(row+1,col)
+                    #self.expandir_no()
+                    return
+
+        ##------------------ Teste Cima ???
+        if(col>0 and not self.sucess):  ## coluna maior que zero 
+            if(grid_cells[row][col-1].id ==1 and col-1 != self.last_col ):
+                print("CIMA")
+                print("linha", row, "colula :", col ,"col - 1:", col-1 , "self last col ", self.last_col)
+                self.teste_de_objetivo(row,col-1)
+                 #self.expandir_no()
+                return
+                 
+
+
 
 
     def teste_de_objetivo(self, row, col):
+        self.last_col = self.col
+        self.last_row = self.row
         self.row = row
         self.col = col
         if(grid_cells[self.row-1][self.col].id ==3):
-            self.sucess = False
+            self.sucess = TRUE
 
     def draw(self):
         pygame.draw.rect(screen, pygame.Color('yellow'), pygame.Rect((TILE*self.row),(TILE*self.col),TILE,TILE))
 
+
+
+
 ##-------------------------- Busca em profundidade
+
 class AgenteDFS:
     def __init__(self,x,y):
         self.x, self.y = x, y
@@ -149,6 +185,7 @@ class AgenteDFS:
         print("DFS se movimentando")
 
 
+## ------------------------- Execução 
 modo = input("Selecione BFS[1] ou DFS[2]")        
 
 if modo == "1":
@@ -176,8 +213,9 @@ while not done:
             grid_cells[row][col].draw()
 
     agente.draw()
+    time.sleep(1) ## delay pra conseguir ver as coisas 
     agente.expandir_no()
 
     
     pygame.display.flip()  
-    clock.tick(30)
+    clock.tick(3000)
