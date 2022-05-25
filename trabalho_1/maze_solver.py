@@ -83,13 +83,13 @@ class Cell:
     
     def draw(self):
         if(matrix[row][col]==1):
-                pygame.draw.rect(screen, pygame.Color('white'), pygame.Rect((TILE*row),(TILE*col),TILE,TILE))
+                pygame.draw.rect(screen, pygame.Color('white')    , pygame.Rect((TILE*row),(TILE*col),TILE,TILE))
         if(matrix[row][col]==0):
-                pygame.draw.rect(screen, pygame.Color('darkgray'), pygame.Rect((TILE*row),(TILE*col),TILE,TILE))
+                pygame.draw.rect(screen, pygame.Color('darkgray') , pygame.Rect((TILE*row),(TILE*col),TILE,TILE))
         if(matrix[row][col]==2):
                 pygame.draw.rect(screen, pygame.Color('darkgreen'), pygame.Rect((TILE*row),(TILE*col),TILE,TILE))
         if(matrix[row][col]==3):
-                pygame.draw.rect(screen, pygame.Color('darkred'), pygame.Rect((TILE*row),(TILE*col),TILE,TILE))
+                pygame.draw.rect(screen, pygame.Color('darkred')  , pygame.Rect((TILE*row),(TILE*col),TILE,TILE))
 
 ##-------------------------- criando as células dos labirintos
 grid_cells = []
@@ -157,7 +157,7 @@ if modo == "2":
     agente = AgenteDFS(inicial_row,inicial_col)
 
 import pygame  
-  
+
 pygame.init()  
 screen = pygame.display.set_mode((ncolumns*TILE,nrows*TILE))  
 clock = pygame.time.Clock()
